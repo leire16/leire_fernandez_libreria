@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Análisis de Calidad') {
             steps {
