@@ -4,11 +4,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Análisis de Calidad') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
-                    // Llamar a la función sonarAnalysis de la librería
-                    sonarAnalysis abortQualityGate: true, abortPipeline: true
+                    // Llamada a la función call del script sonarAnalysis.groovy
+                    sonarAnalysis(abortQualityGate: true, abortPipeline: true)
                 }
             }
         }
