@@ -5,7 +5,7 @@ pipeline {
 
     environment {
         // Definir BRANCH_NAME manualmente
-        BRANCH_NAME = 'master'  // Puedes cambiar 'master' por cualquier otro valor
+        BRANCH_NAME = 'hotfix'  // Puedes cambiar 'master' por cualquier otro valor
     }
 
     stages {
