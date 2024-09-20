@@ -5,9 +5,11 @@ pipeline {
 
     stages {
         stage('SonarQube Analysis') {
-            script {
-                // Llamada a la función call del script sonarAnalysis.groovy
-                sonarAnalysis(true, true)
+           steps {
+                script {
+                    // Llamada a la función call del script sonarAnalysis.groovy
+                    sonarAnalysis(true, true)
+                }
             }
         }
         stage('Continuar') {
