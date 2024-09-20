@@ -1,32 +1,41 @@
 def call(boolean abortQualityGate = false, boolean abortPipeline = false) {
-    // Configuración del entorno del análisis estático (genérico o personalizado)
-    try {
-        // Simulación o ejecución del análisis estático (puedes reemplazar este comando por uno real)
-        sh 'echo "Ejecución de análisis estático de código..."'
+    // Obtener el nombre de la rama de la variable de entorno o pipeline
+    def branchName = env.BRANCH_NAME ?: 'undefined'
 
-        // Esperar el resultado del análisis con un timeout de 5 minutos
-        timeout(time: 5, unit: 'MINUTES') {
-            // Simulación de la evaluación del Quality Gate
-            // Aquí puedes implementar la lógica real si estás usando una herramienta específica
-            def qualityGateStatus = 'OK'  // Simulación: cambiar por la evaluación real del Quality Gate
+    // Configuración del entorno de análisis estático (simulado)
+    withEnv(['STATIC_ANALYSIS_ENV=static']) {
+        try {
+            // Simulación del análisis estático de código
+            sh 'echo "Ejecución de análisis estático de código..."'
 
-            // Evaluar el estado del Quality Gate
-            if (qualityGateStatus != 'OK') {
-                echo "El Quality Gate ha fallado: ${qualityGateStatus}"
-                
-                if (abortQualityGate) {
-                    // Marcar el build como UNSTABLE o abortar el pipeline según los parámetros
-                    currentBuild.result = 'UNSTABLE'
-                    
-                    if (abortPipeline) {
-                        error "El Quality Gate ha fallado y se abortará el pipeline."
-                    }
-                }
-            } else {
-                echo "El Quality Gate ha pasado con éxito."
+            // Esperar el resultado del análisis estático de código con un timeout de 5 minutos
+            timeout(time: 5, unit: 'MINUTES') {
+                // Aquí iría la lógica para evaluar el QualityGate
+                // Por ahora, solo simulamos el proceso
+                sh 'echo "Esperando el resultado del análisis estático..."'
             }
+        } catch (Exception e) {
+            echo "Se produjo un error durante el análisis estático: ${e.message}"
         }
-    } catch (Exception e) {
-        echo "Se produjo un error durante el análisis estático de código: ${e.message}"
+
+        // Evaluar si se debe cortar el pipeline
+        if (abortQualityGate) {
+            currentBuild.result = 'UNSTABLE'
+            if (abortPipeline || shouldAbortPipeline(branchName)) {
+                error "El análisis estático falló y se abortará el pipeline."
+            }
+        } else {
+            echo "El análisis estático pasó con éxito."
+        }
     }
+}
+
+// Función auxiliar para determinar si se debe abortar el pipeline según el nombre de la rama
+def shouldAbortPipeline(String branchName) {
+    if (branchName == 'master' || branchName.startsWith('hotfix')) {
+        echo "La rama es ${branchName}, se abortará el pipeline."
+        return true
+    }
+    echo "La rama es ${branchName}, no se abortará el pipeline."
+    return false
 }

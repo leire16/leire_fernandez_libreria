@@ -4,11 +4,19 @@ pipeline {
     agent any
 
     stages {
-        stage('SonarQube Analysis') {
-           steps {
+        stage('Verificar BRANCH_NAME') {
+            steps {
                 script {
-                    // Llamada a la función call del script sonarAnalysis.groovy
-                    staticAnalysis(true, true)
+                    // Verificar el nombre de la rama
+                    echo "La rama actual es: ${env.BRANCH_NAME}"
+                }
+            }
+        }
+        stage('Static Code Analysis') {
+            steps {
+                script {
+                    // Llamada a la función staticAnalysis
+                    staticAnalysis(false)
                 }
             }
         }
