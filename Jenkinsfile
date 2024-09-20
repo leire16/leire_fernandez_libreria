@@ -3,6 +3,10 @@
 pipeline {
     agent any
 
+    environment {
+        BRANCH_NAME = "${params.BRANCH_NAME ?: 'master'}"  // Valor por defecto 'master'
+    }
+
     stages {
         stage('Verificar BRANCH_NAME') {
             steps {
