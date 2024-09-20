@@ -4,7 +4,8 @@ pipeline {
     agent any
 
     environment {
-        BRANCH_NAME = "${params.BRANCH_NAME ?: 'master'}"  // Valor por defecto 'master'
+        // Definir BRANCH_NAME manualmente
+        BRANCH_NAME = 'master'  // Puedes cambiar 'master' por cualquier otro valor
     }
 
     stages {
@@ -19,8 +20,8 @@ pipeline {
         stage('Static Code Analysis') {
             steps {
                 script {
-                    // Llamada a la función staticAnalysis
-                    staticAnalysis(false)
+                    // Llamada a la función staticAnalysis pasándole el parámetro abortQualityGate
+                    staticAnalysis(false, true) // Puedes cambiar el primer parametro 'false' a 'true' para forzar el corte
                 }
             }
         }
