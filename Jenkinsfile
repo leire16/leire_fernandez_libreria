@@ -8,7 +8,7 @@ pipeline {
            steps {
                 script {
                     // Llamada a la función call del script sonarAnalysis.groovy
-                    sonarAnalysis(true, true)
+                    staticAnalysis(true, true)
                 }
             }
         }
