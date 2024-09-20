@@ -32,7 +32,7 @@ def call(boolean abortQualityGate = false, boolean abortPipeline = false) {
 
 // Función auxiliar para determinar si se debe abortar el pipeline según el nombre de la rama
 def shouldAbortPipeline(String branchName) {
-    if (branchName == 'master' || branchName.startsWith('hotfix')) {
+    if (branchName == 'main' || branchName.startsWith('hotfix')) {
         echo "La rama es ${branchName}, se abortará el pipeline."
         return true
     }
