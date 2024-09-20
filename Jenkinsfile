@@ -5,10 +5,14 @@ pipeline {
 
     stages {
         stage('SonarQube Analysis') {
+            environment {
+                abortQualityGate = true
+                abortPipeline = true
+            }
             steps {
                 script {
                     // Llamada a la función call del script sonarAnalysis.groovy
-                    sonarAnalysis(abortQualityGate: true, abortPipeline: true)
+                    sonarAnalysis(abortQualityGate, abortPipeline)
                 }
             }
         }
