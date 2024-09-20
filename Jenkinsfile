@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Llamada a la función staticAnalysis pasándole el parámetro abortQualityGate
-                    staticAnalysis(false, true) // Puedes cambiar el primer parametro 'false' a 'true' para forzar el corte
+                    staticAnalysis(false, false) // Puedes cambiar el primer parametro 'false' a 'true' para forzar el corte
                 }
             }
         }
